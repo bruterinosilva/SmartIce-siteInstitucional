@@ -2,9 +2,8 @@
     background-image: url("./assets/img/background_white.jpg");
     padding: 100px 0;
     background-size: cover;
-    
-  }
-  
+}
+
 .banner .container {
     align-items: center;
     justify-content: center;
@@ -18,7 +17,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0px 0px 42px 12px rgba(0,0,0,0.41);
+    box-shadow: 0px 0px 42px 12px rgba(0, 0, 0, 0.41);
 }
 
 .container .caixa-formulario h2 {
@@ -52,7 +51,7 @@
     height: 100px;
 }
 
-.caixa-formulario button {
+.btn_cadastrar {
     margin-top: 20px;
     width: 180px;
     color: #FFF;
@@ -64,6 +63,20 @@
     cursor: pointer;
 }
 
-.caixa-formulario button:hover{
+.btn_cadastrar:hover {
     opacity: 0.8;
+}
+
+.blocos {
+    display: flex;
+}
+
+.blocos li {
+    list-style-type: none;
+    margin: 0 10px;
+}
+
+footer {
+    padding: 45px 0;
+    background-color: #265078;
 }

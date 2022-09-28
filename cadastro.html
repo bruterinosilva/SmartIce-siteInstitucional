@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro | SmartIce</title>
+
+    <link rel="stylesheet" href="estilos-gerais.css">
+    <link rel="stylesheet" href="cadastro.css">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    
+
+    <!-- Adicionando Javascript -->
+    <script>
+
+        $(document).ready(function () {
+
+            function limpa_formulário_cep() {
+                // Limpa valores do formulário de cep.
+                $("#rua").val("");
+                $("#bairro").val("");
+                $("#cidade").val("");
+                $("#uf").val("");
+
+            }
+
+            function adicionar_botao() {
+                $('#form-cadastro')[0].innerHTML += "<input type='submit' class='btn_cadastrar' value='Enviar'>"
+            }
+            adicionar_botao()
+
+            //Quando o campo cep perde o foco.
+            $("#cep").blur(function () {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if (validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        $("#rua").val("...");
+                        $("#bairro").val("...");
+                        $("#cidade").val("...");
+                        $("#uf").val("...");
+
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#rua").val(dados.logradouro);
+                                $("#bairro").val(dados.bairro);
+                                $("#cidade").val(dados.localidade);
+                                $("#uf").val(dados.uf);
+
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+    <!--HEADER-->
+    <header>
+        <div class="container">
+            <div class="titulo">
+                <img src="./assets/img/logo2.png" alt="logo da SmartIce">
+            </div>
+
+            <div class="navegacao">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="#">Simulador</a></li>
+                    <li>|</li>
+                    <li class="agora"><a href="cadastro.html">Cadastro</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="banner">
+            <div class="container">
+                <form novalidate="novalidate" id="form-cadastro" class="caixa-formulario">
+                    <img src="./assets/img/logo.png" alt="logo da SmartIce"><br>
+                    <h2>Crie sua conta!</h2>
+                    <ul class="blocos">
+
+                        <li>
+                            <div class="campo">
+                                <label for="razaoSocial">Razão Social:</label>
+                                <input type="text" required id="razaoSocial" name="razaoSocial"
+                                    placeholder="80 caracteres">
+                            </div><br>
+
+                            <div class="campo">
+                                <label for="nomeFantasia">Nome Fantasia:</label>
+                                <input type="text" required id="nomeFantasia" name="nomeFantasia"
+                                    placeholder="50 caracteres">
+                            </div><br>
+
+                            <div class="campo">
+                                <label for="cnpj">CNPJ:</label>
+                                <input type="text" required id="cnpj" class="ls-mask-cnpj" name="cnpj"
+                                    placeholder="00.000.000/0000-00">
+                            </div><br>
+
+                            <div class="campo">
+                                <label for="telefone">Telefone Comercial:</label>
+                                <input type="telefone" required id="telefone" name="telefone" placeholder="(99) 9999-9999">
+                            </div><br>
+
+                            <div class="campo">
+                                <label for="celular">Telefone Celular:</label>
+                                <input type="celular" required id="celular" name="celular" placeholder="(99) 99999-9999">
+                            </div><br>
+                        </li>
+
+                        <li>
+                            <form method="get" action=".">
+                                <div class="campo">
+                                    <label for="cep">CEP:</label>
+                                    <input name="cep" type="text" required id="cep" value="" size="10" maxlength="9" />
+                                </div>
+
+                                <div class="campo">
+                                    <label for="rua">Rua:</label>
+                                    <input name="rua" type="text" required id="rua" size="60" />
+                                </div>
+
+                                <div class="campo">
+                                    <label for="bairro">Bairro:</label>
+                                    <input name="bairro" type="text" required id="bairro" size="40" />
+                                </div>
+
+                                <div class="campo">
+                                    <label for="cidade">Cidade:</label>
+                                    <input name="cidade" type="text" required id="cidade" size="40" />
+                                </div>
+
+                                <div class="campo">
+                                    <label for="estado">Estado:</label>
+                                    <input name="uf" type="text" required id="uf" size="2" />
+                                </div>
+
+                                <div class="campo">
+                                    <label for="numero">Numero:</label>
+                                    <input type="number" name="numero" required size="4">
+                                </div>
+                            </form>
+                        </li>
+
+                        <li>
+                            <div class="campo">
+                                <label for="email">E-mail Principal:</label>
+                                <input type="email" required id="email" name="email" placeholder="email@email.com">
+                            </div><br>
+
+                            <div class="campo">
+                                <label for="emailSec">E-mail Secundário:</label>
+                                <input type="emailSec" required id="emailSec" name="emailSec" placeholder="email@email.com">
+                            </div><br>
+
+                            <div class="campo">
+                                <label for="senha">Senha:</label>
+                                <input type="password" required id="senha" name="senha" placeholder="********">
+                            </div>
+
+                            <div class="campo">
+                                <label for="confirmsenha">Confirmação de Senha:</label>
+                                <input type="password" required id="confirmsenha" name="confirmSenha"
+                                    placeholder="********">
+                            </div>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>SmartIce &copy; 2022 todos os direitos reservados</p>
+        </div>
+    </footer>
+</body>
+
+</html>
