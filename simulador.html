@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="estilos-gerais.css">
+    <link rel="stylesheet" href="simulador.css">
+</head>
+
+<body>
+    <!--HEADER-->
+    <header>
+        <div class="container">
+            <div class="titulo">
+                <img src="./assets/img/logo2.png" alt="logo da SmartIce">
+            </div>
+
+            <div class="navegacao">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li class="agora"><a href="simulador.html">Simulador</a></li>
+                    <li>|</li>
+                    <li><a href="cadastro.html">Cadastro</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="banner">
+            <img src="./assets/img/logo.png" alt="Logo SmartIce">
+            <div id="calculadora">
+                <ul>
+                    <h2 class="fntTitulo">Calculadora<br>Financeira</h2>
+                </ul>
+
+                <!-- Inputs -->
+                <div class="caixa_formulario">
+                    <ul>
+                        <div class="campo">
+                            <label for="tipo_sorvete">Tipo do Sorvete:</label>
+                            <select name="tipo_sorvete" id="tipo_sorvete" name="tipo_sorvete">
+                                <option value="massa">Sorvete de Massa</option>
+                                <option value="picole">Sorvete Picolé</option>
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label for="und_produzidas">Produção Mensal:</label>
+                            <input type="number" id="und_produzidas" name="und_produzidas" placeholder="Unidade">
+                        </div>
+                    </ul>
+                    <ul>
+                        <div class="campo">
+                            <label for="und_descartadas">Descarte Mensal:</label>
+                            <input type="number" id="und_descartadas" name="und_descartadas" placeholder="Unidade">
+                        </div>
+                    </ul>
+                    <ul>
+                        <div class="campo">
+                            <label for="preco_fabrica">Valor de Fabricação R$:</label>
+                            <input type="number" id="preco_fabrica" name="preco_fabrica" placeholder="Reais">
+                        </div>
+                    </ul>
+                    <ul>
+                        <div class="campo">
+                            <label for="preco_venda">Valor de Venda R$:</label>
+                            <input type="number" id="preco_venda" name="preco_venda" placeholder="Reais">
+                        </div>
+                    </ul>
+                </div>
+                <div class="btn_calcular">
+                    <button onclick="calcular()">Calcular</button>
+                </div>
+            </div>
+            <!-- Inputs -->
+
+            <!-- Botao -->
+            </div>
+            
+        </section>
+    </main>
+     <!--RODAPÉ/FOOTER-->
+  <footer>
+    <div class="container">
+      <p>Feito com amor por um aluno &hearts; SPTech &copy; 2022</p>
+    </div>
+  </footer>
+</body>
+
+</html>
+<script>
+
+    var reset = calculadora.innerHTML;
+
+    function calcular() {
+        var tipo = tipo_sorvete.value;
+        var producao = Number(und_produzidas.value);
+        var desperdicio = Number(und_descartadas.value);
+        var valor_fabricacao = Number(preco_fabrica.value);
+        var valor_venda = Number(preco_venda.value);
+
+        var perda_porcento = desperdicio * 100 / producao;
+        var lucro_porcento = (valor_venda / valor_fabricacao) * 100 - 100;
+        var gasto_producao = producao * valor_fabricacao;
+        var lucro_sem_desperdicio = producao * valor_venda;
+        var total_despercidio = producao - desperdicio;
+        var lucro_com_desperdicio = lucro_sem_desperdicio - desperdicio * valor_venda;
+        var deixa_ganhar_mes = lucro_sem_desperdicio - total_despercidio * valor_venda;
+        var deixa_ganhar_ano = deixa_ganhar_mes * 12;
+        calculadora.innerHTML =
+            `Com base nos valores registros:<br>
+        Sua empresa gera uma receita de ${lucro_porcento.toFixed(0)}% em cima do seu produto. <br>
+        e, o valor da produção de sorvete de ${tipo} é de ${gasto_producao.toLocaleString("pt-BR", { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' })}.<br>
+        Dos ${producao} sorvetes produzidos, ${desperdicio} são descartados e,.<br>
+        sem a perda de produtos, pode gerar uma receita de até: ${lucro_sem_desperdicio.toLocaleString("pt-BR", { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' })}.<br>
+        Com o descarte, você gera uma receita de apenas: ${lucro_com_desperdicio.toLocaleString("pt-BR", { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' })}.<br>
+        o que reduz seu lucro mensal em: ${perda_porcento.toFixed(0)}%.<br>
+        sendo uma perda MENSAL de: ${deixa_ganhar_mes.toLocaleString("pt-BR", { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' })}.<br>
+        totalizando uma perda ANUAL de: ${(deixa_ganhar_ano).toLocaleString("pt-BR", { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' })}.<br>
+        
+        <div class="botao2">
+                <button onclick="novoCalculo()">Novo Calculo</button>
+            </div>
+        </div>`
+    }
+    function novoCalculo() {
+        calculadora.innerHTML = reset;
+    }
+
+</script>
