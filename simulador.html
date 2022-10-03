@@ -113,12 +113,13 @@
         var deixa_ganhar_mes = lucro_sem_desperdicio - total_despercidio * valor_venda;
         var deixa_ganhar_ano = deixa_ganhar_mes * 12;
         calculadora.innerHTML =
-            `Com base nos valores registros:<br>
-        Sua empresa gera uma receita de ${lucro_porcento.toFixed(0)}% em cima do seu produto. <br>
-        e, o valor da produção de sorvete de ${tipo} é de ${gasto_producao.toLocaleString("pt-BR", { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' })}.<br>
-        Dos ${producao} sorvetes produzidos, ${desperdicio} são descartados e,.<br>
-        sem a perda de produtos, pode gerar uma receita de até: ${lucro_sem_desperdicio.toLocaleString("pt-BR", { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' })}.<br>
-        Com o descarte, você gera uma receita de apenas: ${lucro_com_desperdicio.toLocaleString("pt-BR", { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' })}.<br>
+        `Com base nos valores registrados:<br>
+        O valor da produção de sorvete de ${tipo} é de ${gasto_producao.toLocaleString("pt-BR", { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' })}.<br>
+        E sua empresa gera uma receita de ${lucro_porcento.toFixed(0)}% em cima do seu produto. <br>
+        
+        Dos ${producao} sorvetes produzidos, ${desperdicio} são descartados.<br>
+        e sem essa perda você pode gerar uma receita de até: ${lucro_sem_desperdicio.toLocaleString("pt-BR", { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' })}.<br>
+        Com esse descarte, você gera uma receita de apenas: ${lucro_com_desperdicio.toLocaleString("pt-BR", { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' })}.<br>
         o que reduz seu lucro mensal em: ${perda_porcento.toFixed(0)}%.<br>
         sendo uma perda MENSAL de: ${deixa_ganhar_mes.toLocaleString("pt-BR", { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' })}.<br>
         totalizando uma perda ANUAL de: ${(deixa_ganhar_ano).toLocaleString("pt-BR", { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' })}.<br>
